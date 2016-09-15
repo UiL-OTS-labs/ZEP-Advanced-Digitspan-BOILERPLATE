@@ -24,7 +24,7 @@ const string    DEFAULT_RESEARCHER_ID           = "JD"; // John Doe
 const int       EXPERIMENT_VERSION              = 1;
 
 // Database number. Typically set to 1.
-const int       DATABASE_NUMBER                 = 1;
+const string          DATABASE_NUMBER                 = "1";
 
 // Whether experiment record, researcher record and group record should be
 // checked for updating (true) or reading only (false) during the experiment

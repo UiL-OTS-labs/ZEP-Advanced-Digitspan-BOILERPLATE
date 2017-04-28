@@ -7,14 +7,14 @@ EXPERIMENT:     A poper Visual Digit Span test
 
 DESCRIPTION:
 
-Memory span test to measure the longest list of digits that a 
-participant can recall after presentation. The participant is visually 
+Memory span test to measure the longest list of digits that a
+participant can recall after presentation. The participant is visually
 presented a list of digits (one more for each trial). The participant's
 task is to type in the digits he/she saw in presented or reversed order.
 There are a configured amount of digit sequences per set and if more
 the faults exceed the configured threshold the test is aborted. The
-number of faults is reset at each new set. The script can be configured 
-in modules/configuration.zm. By default the digit arrays are generated 
+number of faults is reset at each new set. The script can be configured
+in modules/configuration.zm. By default the digit arrays are generated
 psuedo-random.
 
 Output: two tables.
@@ -35,14 +35,14 @@ Global structure of experiment:
 
   - test phase (... trials)
       trial
-  
+
   - second round of instructions (if setup)
-  
+
   - second practice phase (if setup)
-  
+
   - test phase (... trials)
-      trial      
-     
+      trial
+
 
   - thankyou
 
@@ -53,7 +53,7 @@ HISTORY:
 
 \******************************************************************************/
 
-requires 1.12;
+requires 1.14;
 
 import std_windows1;
 import std_entry_page1;
@@ -87,10 +87,10 @@ start() // initialises the code, sets variables etc.
 Experiment experiment
 {
     on_event:entry()
-    {	
+    {
 		show_test_windows();
     }
-    
+
     on_event:message()
     {
         // On Ctrl+F4 jump unconditionally to the thank-you part.
@@ -126,19 +126,19 @@ Experiment experiment
 			} else signal(first_instruction, CONTINUE);
 		}
 	}
-	
+
 	Part first_practise
 	{
 		on_event:entry()
         {
 			if(CFG_GIVE_PRACTISE)
-			{	
+			{
 				println("==> Practicing <==");
 				instruct::practice_call(this);
 			} else signal(first_practise, CONTINUE);
         }
 	}
-	
+
 	Part first_task // Actual task
 	{
 		on_event:entry()
@@ -147,7 +147,7 @@ Experiment experiment
 			test::task_call(this);
         }
 	}
-	
+
 	Part pause1
 
     {
@@ -159,13 +159,13 @@ Experiment experiment
 			} else signal(pause1, CONTINUE);
         }
     }
-	
+
 	Part second_instruction
 	{
 		on_event:entry()
         {
 			DIGITSPAN_DIRECTION = DIGITSPAN_DIRECTION == FORWARD ? BACKWARD : FORWARD; // reverse direction!
-			
+
 			if(CFG_DIRECTION == BOTH && CFG_GIVE_INSTRUCTION)
 			{
 				println("==> Instruction for Second time <==");
@@ -173,7 +173,7 @@ Experiment experiment
 			} else signal(second_instruction, CONTINUE);
         }
 	}
-	
+
 	Part second_practise
 	{
 		on_event:entry()
@@ -185,7 +185,7 @@ Experiment experiment
 			} else signal(second_practise, CONTINUE);
         }
 	}
-	
+
 	Part second_task
 	{
 		on_event:entry()
@@ -197,7 +197,7 @@ Experiment experiment
 			} else signal(second_task, CONTINUE);
         }
 	}
-	
+
     Part pause2
 
     {
@@ -206,13 +206,13 @@ Experiment experiment
             blank_page.action_auto(this, 500ms, 500ms);
         }
     }
-    
+
     Part thankyou
     {
         on_event:entry()
         {
 			control.end_experiment();   // Check-in session.
-			
+
 			string thanku_txt = "<Something is wrong with language settings!>";
             if(CFG_LANGUAGE == ENGLISH)
 				thanku_txt = THANK_YOU_TEXT;
